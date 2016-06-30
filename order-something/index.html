@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Eindopdracht Bas Ariaansz - Bestelsysteem</title>
+    <link rel="stylesheet" type="text/css" href="/FED01/eind-opdracht/css/style.css"/>
+</head>
+<body>
+
+<div id="main">
+    <div id="nav">
+        <a href="#" data-page="products">Products</a>
+        <a href="#" data-page="prev-order">Previous order</a>
+        <a href="#" data-page="order">Shopping cart</a>
+    </div>
+
+    <div id="404">
+        <script id="template-404" type="text/template">
+            <div id="404">
+                <h1>404 Page not found</h1>
+                <h4>This page is not found, please try another URL</h4>
+            </div>
+        </script>
+    </div>
+    <div id="products" class="page">
+
+        <script id="template-error" type="text/template">
+            <span class="error"><%= message %></span>
+        </script>
+        <script id="template-message" type="text/template">
+            <span class="message"><%= message %></span>
+        </script>
+        <script id="template-products" type="text/template">
+            <h1>Producten</h1>
+            <% _.each(products, function(product, index, list){ %>
+            <div class="product">
+                <a href="#" data-id="<%= product.get('product_id') %>"><img src="http://localhost:8888/FED01/eind-opdracht/images/<%= product.get('img_source') %>" alt="<%= product.get('name') %>"></a>
+                <span><%= product.get('name') %></span>
+            </div>
+            <% }); %>
+        </script>
+        <script id="template-detail-product" type="text/template">
+            <div class="detail-product">
+                <h1><%= product.get('name') %></h1>
+                <img src="http://localhost:8888/FED01/eind-opdracht/images/<%= product.get('img_source') %>" alt="<%= product.get('name') %>">
+                <h4>Product information:</h4>
+                <p><%= product.get('description') %></p>
+                <h3>Price: <strong>$<%= product.get('price') %>,00</strong></h3>
+                <% if (product.get('in_stock') == "false") { %><span class="error"><strong>Out of stock.</strong></span><% } else { %><span class="in-stock"><strong>In stock.</strong></span><% } %>
+                <a href="#" data-id="<%= product.get('product_id') %>" data-stock="<%= product.get('in_stock') %>" data-name="<%= product.get('name') %>" data-price="<%= product.get('price') %>" data-imgSource="<%= product.get('img_source') %>">Order now!</a>
+                <span id="msg"></span>
+            </div>
+        </script>
+
+    </div>
+    <div id="order" class="page">
+        <script id="order-error" type="text/template">
+            <span class="error"><%= message %></span>
+        </script>
+        <script id="template-order" type="text/template">
+            <h1>Order</h1>
+            <table class="ordered-products">
+                <tr>
+                    <th class="icon"></th>
+                    <th>Product Nr.</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                <% _.each(products, function(product, index, list){ %>
+                <tr>
+                    <td class="icon"><img src="http://localhost:8888/FED01/eind-opdracht/images/<%= product.get('img_source') %>" alt="<%= product.get('name') %>"></td>
+                    <td class="prdNr"><span><%= product.get('product_id') %></span></td>
+                    <td class="name"><span><%= product.get('name') %></span></td>
+                    <td class="price"><span data-amount="<%= product.get('price') %>">$<%= product.get('price') %>,00</span></td>
+                    <td class="remove"><button data-id="<%= product.get('id') %>">x</button></td>
+                </tr>
+                <% }); %>
+                <tr class="total">
+                    <td class="icon"><span>Totaal:</span></td>
+                    <td class="prdNr"></td>
+                    <td class="name"></td>
+                    <td class="price">$<span class="total-price">300</span>,00</td>
+                    <td></td>
+                </tr>
+            </table>
+            <a id="place-order" href="#">Place order</a>
+        </script>
+    </div>
+    <div id="prev-order" class="page">
+        <script id="template-prev-orders-error" type="text/template">
+            <span class="error"><%= message %></span>
+        </script>
+        <script id="template-prev-orders" type="text/template">
+            <h1>Previous ordered products</h1>
+            <h4>These are the products you have ordered in the past.</h4>
+            <table class="ordered-products">
+                <tr>
+                    <th class="icon"></th>
+                    <th>Product Nr.</th>
+                    <th>Name</th>
+                </tr>
+                <% _.each(products, function(product, index, list){ %>
+                <tr>
+                    <td class="icon"><img src="http://localhost:8888/FED01/eind-opdracht/images/<%= product.get('img_source') %>" alt="<%= product.get('name') %>"></td>
+                    <td class="prdNr"><span><%= product.get('product_id') %></span></td>
+                    <td class="name"><span><%= product.get('name') %></span></td>
+                </tr>
+                <% }); %>
+            </table>
+        </script>
+    </div>
+</div>
+
+<script src="/FED01/eind-opdracht/dist/bundle.js" type="text/javascript"></script>
+</body>
+</html>
